@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "poke-api-etl"
+version = "0.1.0"
+description = ""
+authors = ["davypedro <davypedro@mat.ci.ufpb.br>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.3"
+requests = "^2.31.0"
+pandas = "^2.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
