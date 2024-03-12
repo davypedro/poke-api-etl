@@ -3,6 +3,7 @@ Functions for loading data from a source.
 """
 
 import pandas as pd
+import logging
 import os
 
 def load_data(data_path: str) -> pd.DataFrame:
@@ -18,6 +19,9 @@ def load_data(data_path: str) -> pd.DataFrame:
     pd.DataFrame: The dataset as a DataFrame.
     """
 
+    logging.basicConfig(filename='loading.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger()
+
     RAW_PATH = r"C:\poke-api-etl\data\raw"
     TRUSTED_PATH = r"C:\poke-api-etl\data\trusted"
 
@@ -30,7 +34,7 @@ def load_data(data_path: str) -> pd.DataFrame:
     data = pd.read_json(json_file_path)
     data.to_csv(csv_file_path, index=False)
 
-    print("File loaded and saved as CSV in:", csv_file_path)
+    logger.info("File loaded and saved as CSV in: %s", csv_file_path)
 
     return data
 
