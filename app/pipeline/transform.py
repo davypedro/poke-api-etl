@@ -2,8 +2,10 @@
 Function to concat the json files in a unic file.
 """
 
-import json
+
 import os
+import json
+import logging
 from typing import List
 
 def concat_json_files(file_paths: List[str]) -> json:
@@ -24,6 +26,9 @@ def concat_json_files(file_paths: List[str]) -> json:
     concat_json_files()
     """
 
+    logging.basicConfig(filename='concatenation.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger()
+
     INITIAL_PATH = fr"C:\poke-api-etl\data\transient"
     FINAL_PATH = fr"C:\poke-api-etl\data\raw"
 
@@ -41,7 +46,7 @@ def concat_json_files(file_paths: List[str]) -> json:
 
     outfile.close()
 
-    print("File concatenated in: ", f"{FINAL_PATH}/pokemon_file.json")
+    logger.info("File concatenated in: %s", f"{FINAL_PATH}/pokemon_file.json")
 
     # Delete JSON files from the transiente layer
     INITIAL_PATH = fr"C:\poke-api-etl\data\transient"
@@ -50,7 +55,7 @@ def concat_json_files(file_paths: List[str]) -> json:
     for file in transient_files:
         if file.endswith(".json"):
             os.remove(os.path.join(INITIAL_PATH, file))
-            print("Deleted file:", os.path.join(INITIAL_PATH, file))
+            logger.info("Deleted file: %s", os.path.join(INITIAL_PATH, file))
 
 if __name__ == "__main__":
     concat_json_files("C:\poke-api-etl\data\raw")

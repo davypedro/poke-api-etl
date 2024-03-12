@@ -3,6 +3,7 @@ Function to extract data from the API and save in a json file.
 """
 
 import requests
+import logging
 import json
 
 def extract_from_api(url: str) -> json:
@@ -18,6 +19,9 @@ def extract_from_api(url: str) -> json:
     Example:
     extract_from_api("https://pokeapi.co/api/v2/pokemon/")
     """
+
+    logging.basicConfig(filename='extract.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger()
 
     url = "https://pokeapi.co/api/v2/pokemon/"
 
@@ -45,19 +49,19 @@ def extract_from_api(url: str) -> json:
             }
 
             pokemon_list.append(infos)
-            print(response_pokemon["id"])
+            logger.info(response_pokemon["id"])
 
         file_path = fr"C:\poke-api-etl\data\transient\pokemon_file_{counter}.json"
 
         with open(file_path, 'w') as outfile:
-            print("Saving file in: ", file_path)
+            logger.info("Saving file in: %s", file_path)
             json.dump(pokemon_list, outfile)
 
         outfile.close()
         counter = counter + 1
         pokemon_list = list()
 
-    print(pokemon_list)
+    logger.info(pokemon_list)
 
 if __name__ == '__main__':
     extract_from_api("https://pokeapi.co/api/v2/pokemon/")
